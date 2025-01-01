@@ -1,11 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark py-3">
       <div className="container-fluid">
         <a className="navbar-brand" href="/">
-          E-Commercial Website 
+          E-Commercial Website
         </a>
         <button
           className="navbar-toggler"
@@ -21,18 +22,13 @@ const Navbar = () => {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto">
             <li className="nav-item">
-              <a className="nav-link" href="#home">
-                Home
-              </a>
+              <Link className="nav-link" to="/products">
+                Products
+              </Link>
             </li>
             <li className="nav-item">
               <a className="nav-link" href="#about">
                 About
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#cart">
-                Cart
               </a>
             </li>
             <li className="nav-item">
