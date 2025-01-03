@@ -45,6 +45,9 @@ const ProductList = ({ products, onAddToCart }) => {
             <p>
               <strong>Category:</strong> {product.category}
             </p>
+            <p>
+              <strong>Price:</strong> {product.price}$
+            </p>
             {/* Add "Add to Cart" button below the category */}
             <button
               onClick={() => onAddToCart(product)}
