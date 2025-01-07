@@ -9,6 +9,27 @@ const CartPage = () => {
   const calculateTotalPrice = () =>
     cart.reduce((total, item) => total + item.price * item.quantity, 0);
 
+  const handleCheckout = async () => {
+    try {
+      const response = await fetch("http://localhost:8080/api/products/checkout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(cart), // Send `cart` as a plain array
+      });
+
+      if (response.ok) {
+        const responseData = await response.text();
+        console.log("Response from backend:", responseData);
+        navigate("/", { state: { responseData } });
+      } else {
+        console.error("Failed to process checkout:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error during checkout:", error);
+    }
+  };
   return (
     <div style={{ padding: "16px", fontFamily: "Arial, sans-serif" }}>
       <h1>Your Cart</h1>
@@ -78,6 +99,7 @@ const CartPage = () => {
               Return to Products
             </button>
             <button
+              onClick={handleCheckout}
               style={{
                 padding: "10px 20px",
                 backgroundColor: "#28a745",
@@ -93,7 +115,6 @@ const CartPage = () => {
               Checkout
             </button>
           </div>
-
         </div>
       )}
     </div>
