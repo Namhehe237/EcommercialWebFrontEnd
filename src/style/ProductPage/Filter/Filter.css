@@ -1,0 +1,15 @@
+/* Filter.css */
+.filter-container {
+    margin-bottom: 16px;
+  }
+  
+  .filter-label {
+    margin-right: 8px;
+  }
+  
+  .filter-select {
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  

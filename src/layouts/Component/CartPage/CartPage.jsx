@@ -1,5 +1,6 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import "../../../style/CartPage/CartPage.css"; // Import the CSS file
 
 const CartPage = () => {
   const { state } = useLocation();
@@ -16,7 +17,7 @@ const CartPage = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(cart), // Send `cart` as a plain array
+        body: JSON.stringify(cart),
       });
 
       if (response.ok) {
@@ -30,88 +31,36 @@ const CartPage = () => {
       console.error("Error during checkout:", error);
     }
   };
+
   return (
-    <div style={{ padding: "16px", fontFamily: "Arial, sans-serif" }}>
-      <h1>Your Cart</h1>
+    <div className="container">
+      <h1 className="cart-header">Your Cart</h1>
       {cart.length === 0 ? (
-        <p>Your cart is empty</p>
+        <p className="cart-empty">Your cart is empty</p>
       ) : (
         <div>
-          <ul style={{ listStyleType: "none", padding: 0, margin: 0 }}>
+          <ul className="cart-list">
             {cart.map((item) => (
-              <li
-                key={item.id}
-                style={{
-                  padding: "12px",
-                  borderBottom: "1px solid #ddd",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  fontFamily: "Arial, sans-serif",
-                  backgroundColor: "#f9f9f9",
-                }}
-              >
-                <div style={{ flex: "1" }}>
-                  <strong style={{ fontSize: "16px", color: "#333" }}>{item.name}</strong>
-                  <span style={{ fontSize: "14px", color: "#555", marginLeft: "8px" }}>
-                    (${item.price.toFixed(2)})
-                  </span>
+              <li className="cart-item" key={item.id}>
+                <div>
+                  <strong className="cart-item-name">{item.name}</strong>
+                  <span className="cart-item-price">(${item.price.toFixed(2)})</span>
                 </div>
-                <div
-                  style={{
-                    fontSize: "14px",
-                    color: "#333",
-                    backgroundColor: "#f0f0f0",
-                    padding: "4px 8px",
-                    borderRadius: "4px",
-                    border: "1px solid #ddd",
-                  }}
-                >
-                  Quantity: {item.quantity}
-                </div>
+                <div className="cart-item-quantity">Quantity: {item.quantity}</div>
               </li>
             ))}
           </ul>
-          <h3
-            style={{
-              marginTop: "16px",
-              fontSize: "18px",
-              color: "#333",
-              textAlign: "right",
-            }}
-          >
+          <h3 className="total-price">
             Total: ${calculateTotalPrice().toFixed(2)}
           </h3>
-          <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "16px" }}>
+          <div className="button-group">
             <button
               onClick={() => navigate("/products", { state: { cart } })}
-              style={{
-                padding: "10px 20px",
-                backgroundColor: "#007BFF",
-                color: "#fff",
-                border: "none",
-                borderRadius: "4px",
-                cursor: "pointer",
-                fontSize: "16px",
-                textAlign: "center",
-              }}
+              className="button return"
             >
               Return to Products
             </button>
-            <button
-              onClick={handleCheckout}
-              style={{
-                padding: "10px 20px",
-                backgroundColor: "#28a745",
-                color: "#fff",
-                border: "none",
-                borderRadius: "4px",
-                cursor: "pointer",
-                fontSize: "16px",
-                textAlign: "center",
-                marginLeft: "8px",
-              }}
-            >
+            <button onClick={handleCheckout} className="button checkout">
               Checkout
             </button>
           </div>

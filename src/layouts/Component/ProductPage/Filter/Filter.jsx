@@ -1,19 +1,16 @@
 import React from "react";
+import "../../../../style/ProductPage/Filter/Filter.css"; // Import the CSS file
 
 const Filter = ({ category, onCategoryChange }) => (
-  <div style={{ marginBottom: "16px" }}>
-    <label htmlFor="category" style={{ marginRight: "8px" }}>
+  <div className="filter-container">
+    <label htmlFor="category" className="filter-label">
       Filter by Category:
     </label>
     <select
       id="category"
       value={category}
       onChange={(e) => onCategoryChange(e.target.value)}
-      style={{
-        padding: "8px",
-        borderRadius: "4px",
-        border: "1px solid #ccc",
-      }}
+      className="filter-select"
     >
       <option value="">All Categories</option>
       <option value="Electronics">Electronics</option>

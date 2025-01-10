@@ -1,0 +1,130 @@
+/* HomePage.css */
+.home-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .home-header {
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    color: #fff;
+    padding: 40px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+  
+  .home-header h1 {
+    font-size: 3rem;
+    margin: 0;
+  }
+  
+  .home-header p {
+    font-size: 1.2rem;
+    margin: 10px 0 0;
+  }
+  
+  .home-intro {
+    background: #fff;
+    padding: 30px;
+    margin: 20px 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .home-intro h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+  
+  .home-intro p {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+  
+  .home-features {
+    background: #f0f4f7;
+    padding: 30px;
+    margin: 20px 0;
+    border-radius: 8px;
+  }
+  
+  .home-features h2 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+  }
+  
+  .home-features ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+  
+  .home-features li {
+    background: #fff;
+    padding: 15px;
+    margin: 10px;
+    border-radius: 8px;
+    flex: 1 1 calc(25% - 20px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-size: 1rem;
+    min-width: 200px;
+  }
+  
+  .home-categories {
+    margin: 20px 0;
+  }
+  
+  .home-categories h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  .categories {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+  
+  .category-item {
+    background: #fff;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    flex: 1 1 calc(30% - 20px);
+    max-width: 300px;
+  }
+  
+  .category-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+  }
+  
+  .category-item h3 {
+    margin: 10px 0 0;
+    font-size: 1.2rem;
+  }
+  
+  .explore-products-link {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .explore-products-link a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
