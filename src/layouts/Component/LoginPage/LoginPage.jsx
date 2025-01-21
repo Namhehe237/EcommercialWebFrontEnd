@@ -36,7 +36,7 @@ const LoginPage = () => {
         <h2 className="login-title">Login</h2>
         <form className="login-form" onSubmit={handleLogin}>
           <div className="form-group">
-            <label>Email:</label>
+            <label>Email</label>
             <input
               type="email"
               value={email}
@@ -45,7 +45,7 @@ const LoginPage = () => {
             />
           </div>
           <div className="form-group">
-            <label>Password:</label>
+            <label>Password</label>
             <input
               type="password"
               value={password}
@@ -57,7 +57,25 @@ const LoginPage = () => {
             Login
           </button>
         </form>
-        {message && <p className="error-message">{message}</p>}
+
+        {/* Register and Forgot Password Buttons */}
+        <div className="additional-links">
+          <button
+            className="btn-secondary"
+            onClick={() => navigate("/user/register")} // Navigate to the register page
+          >
+            Register
+          </button>
+          <br />
+          <button
+            className="btn-link"
+            onClick={() => navigate("/user/forgot-password")} // Navigate to the forgot password page
+          >
+            Forgot Password?
+          </button>
+        </div>
+
+        {message && <p className="message">{message}</p>}
       </div>
     </div>
   );

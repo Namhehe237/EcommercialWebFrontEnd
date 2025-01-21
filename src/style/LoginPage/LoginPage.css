@@ -85,6 +85,29 @@
     text-align: center;
 }
 
+/* Forgot Password and Register Button Styles */
+.additional-links {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.btn-secondary, .btn-link {
+    background-color: transparent;
+    border: none;
+    color: #6a11cb;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+    padding: 5px 0;
+    font-weight: 500;
+}
+
+.btn-secondary:hover, .btn-link:hover {
+    color: #2575fc;
+    text-decoration: none;
+}
+
 /* Animations */
 @keyframes fadeIn {
     from {
