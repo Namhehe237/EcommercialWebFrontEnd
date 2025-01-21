@@ -1,7 +1,22 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Track login status
+  const navigate = useNavigate();
+
+  const handleButtonClick = () => {
+    if (isLoggedIn) {
+      // Logout logic
+      setIsLoggedIn(false); // Update state to logged out
+      alert("You have been logged out.");
+      // Optionally clear tokens or session data here
+    } else {
+      // Navigate to login page
+      navigate("/user/login");
+    }
+  };
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark py-3">
       <div className="container-fluid">
@@ -35,6 +50,14 @@ const Navbar = () => {
               <a className="nav-link" href="#contact">
                 Contact
               </a>
+            </li>
+            <li className="nav-item">
+              <button
+                className="btn btn-outline-light ms-3"
+                onClick={handleButtonClick}
+              >
+                {isLoggedIn ? "Logout" : "Login"}
+              </button>
             </li>
           </ul>
         </div>

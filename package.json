@@ -6,6 +6,7 @@
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.1.0",
     "@testing-library/user-event": "^14.5.2",
+    "axios": "^1.7.9",
     "cra-template": "1.2.0",
     "ecomweb": "file:",
     "react": "^18.3.1",
