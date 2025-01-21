@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import axios from "axios";
-import "../../../style/LoginPage/LoginPage.css"; // Import the CSS file
+import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useAuth } from "../../../context/AuthContext"; // Import useAuth for state management
+import "../../../style/LoginPage/LoginPage.css";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const { setIsLoggedIn } = useAuth(); // Use context to manage login state
+  const navigate = useNavigate(); // Initialize navigate
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -14,7 +18,9 @@ const LoginPage = () => {
         email,
         password,
       });
-      setMessage(response.data);
+      setMessage("Login successful!");
+      setIsLoggedIn(true); // Update login state in context
+      navigate("/"); // Redirect to the homepage (http://localhost:3000)
     } catch (error) {
       if (error.response && error.response.status === 401) {
         setMessage("Invalid email or password");

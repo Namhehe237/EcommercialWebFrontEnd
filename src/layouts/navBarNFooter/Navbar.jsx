@@ -1,20 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 const Navbar = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Track login status
+  const { isLoggedIn, setIsLoggedIn } = useAuth();
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
-    if (isLoggedIn) {
+    if (isLoggedIn || !isLoggedIn) {
       // Logout logic
       setIsLoggedIn(false); // Update state to logged out
-      alert("You have been logged out.");
-      // Optionally clear tokens or session data here
-    } else {
-      // Navigate to login page
-      navigate("/user/login");
-    }
+      navigate("/user/login"); // Redirect to the homepage
+    } 
   };
 
   return (
