@@ -1,16 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import "../../../style/CartPage/CartPage.css"; // Import the CSS file
+import { useAuth } from "../../../context/AuthContext";
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from "@mui/material";
+import "../../../style/CartPage/CartPage.css";
 
 const CartPage = () => {
   const { state } = useLocation();
   const cart = state?.cart || [];
   const navigate = useNavigate();
+  const { isLoggedIn } = useAuth();
+  const [openDialog, setOpenDialog] = useState(false);
 
   const calculateTotalPrice = () =>
     cart.reduce((total, item) => total + item.price * item.quantity, 0);
 
   const handleCheckout = async () => {
+    if (!isLoggedIn) {
+      setOpenDialog(true); // Open the dialog if not logged in
+      return;
+    }
+
     try {
       const response = await fetch("http://localhost:8080/api/products/checkout", {
         method: "POST",
@@ -66,6 +75,22 @@ const CartPage = () => {
           </div>
         </div>
       )}
+
+      {/* Dialog for login warning */}
+      <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
+        <DialogTitle>Login Required</DialogTitle>
+        <DialogContent>
+          <p>You need to log in to proceed to checkout.</p>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => navigate("/user/login")} color="primary">
+            Log In
+          </Button>
+          <Button onClick={() => setOpenDialog(false)} color="secondary">
+            Cancel
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };

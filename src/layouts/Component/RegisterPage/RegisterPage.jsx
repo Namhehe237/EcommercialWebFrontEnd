@@ -1,63 +1,126 @@
-import React, { useState } from "react";
-import axios from "axios";
-import "../../../style/LoginPage/LoginPage.css";
-import { useAuth } from "../../../context/AuthContext"; // Import AuthContext
+import React, { useState } from 'react';
+import '../../../style/RegisterPage/RegisterPage.css'; // Import the CSS file
 
-const LoginPage = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
-  const { setIsLoggedIn } = useAuth(); // Access the context
+const RegisterPage = () => {
+  const [userDetails, setUserDetails] = useState({
+    username: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  });
 
-  const handleLogin = async (event) => {
-    event.preventDefault();
+  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUserDetails({ ...userDetails, [name]: value });
+    setErrorMessage(''); // Clear error message on input change
+    setSuccessMessage(''); // Clear success message on input change
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (userDetails.password !== userDetails.confirmPassword) {
+      setErrorMessage('Passwords do not match!');
+      return;
+    }
+
     try {
-      const response = await axios.post("http://localhost:8080/api/user/login", {
-        email,
-        password,
+      const response = await fetch('http://localhost:8080/api/user/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: userDetails.username,
+          email: userDetails.email,
+          password: userDetails.password,
+        }),
       });
-      setMessage("Login successful!");
-      setIsLoggedIn(true); // Update global state to logged in
-    } catch (error) {
-      if (error.response && error.response.status === 401) {
-        setMessage("Invalid email or password");
+
+      if (response.ok) {
+        setSuccessMessage('User registered successfully!');
+        setUserDetails({ username: '', email: '', password: '', confirmPassword: '' });
       } else {
-        setMessage("An error occurred. Please try again.");
+        const errorData = await response.json();
+        setErrorMessage(errorData.message || 'Registration failed');
       }
+    } catch (error) {
+      setErrorMessage('An error occurred. Please try again later.');
     }
   };
 
   return (
-    <div className="login-container">
-      <div className="login-card">
-        <h2 className="login-title">Login</h2>
-        <form className="login-form" onSubmit={handleLogin}>
+    <div className="register-container">
+      <div className="register-card">
+        <h2 className="register-title">Sign Up</h2>
+        <form onSubmit={handleSubmit} className="register-form">
           <div className="form-group">
-            <label>Email:</label>
+            <label htmlFor="username">Username</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              value={userDetails.username}
+              onChange={handleChange}
+              placeholder="Enter your username"
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
             <input
               type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              id="email"
+              name="email"
+              value={userDetails.email}
+              onChange={handleChange}
               placeholder="Enter your email"
+              required
             />
           </div>
           <div className="form-group">
-            <label>Password:</label>
+            <label htmlFor="password">Password</label>
             <input
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              id="password"
+              name="password"
+              value={userDetails.password}
+              onChange={handleChange}
               placeholder="Enter your password"
+              required
             />
           </div>
-          <button className="btn-primary" type="submit">
-            Login
+          <div className="form-group">
+            <label htmlFor="confirmPassword">Confirm Password</label>
+            <input
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              value={userDetails.confirmPassword}
+              onChange={handleChange}
+              placeholder="Re-enter your password"
+              required
+            />
+          </div>
+          {errorMessage && <p className="error-message">{errorMessage}</p>}
+          {successMessage && <p className="success-message">{successMessage}</p>}
+          <button type="submit" className="btn-primary">
+            Sign Up
           </button>
         </form>
-        {message && <p className="error-message">{message}</p>}
+        <div className="register-footer">
+          <p>
+            Already have an account?{' '}
+            <a href="/user/login" className="link">
+              Sign In
+            </a>
+          </p>
+        </div>
       </div>
     </div>
   );
 };
 
-export default LoginPage;
+export default RegisterPage;

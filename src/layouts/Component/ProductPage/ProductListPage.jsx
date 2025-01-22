@@ -71,6 +71,11 @@ const ProductListPage = () => {
   const calculateTotalPrice = () =>
     cart.reduce((total, item) => total + item.price * item.quantity, 0);
 
+  // Navigate to product details
+  const handleProductClick = (productId) => {
+    navigate(`/products/details/${productId}`);
+  };
+
   if (loading) {
     return <p className="loading">Loading...</p>;
   }
@@ -115,7 +120,7 @@ const ProductListPage = () => {
         </div>
       </div>
       <Filter category={category} onCategoryChange={handleCategoryChange} />
-      <ProductList products={products} onAddToCart={addToCart} />
+      <ProductList products={products} onAddToCart={addToCart} onProductClick={handleProductClick} />
       <Pagination currentPage={currentPage} totalPages={Math.ceil(products.length / itemsPerPage)} onPageChange={setCurrentPage} />
     </div>
   );
