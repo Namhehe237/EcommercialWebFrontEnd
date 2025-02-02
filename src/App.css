@@ -2,6 +2,8 @@
   text-align: center;
 }
 
+
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -36,3 +38,32 @@
     transform: rotate(360deg);
   }
 }
+/* Ensure body and html elements take full height */
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: 'Roboto', sans-serif; /* Customize based on your font */
+}
+
+/* Full height container for the layout */
+.main-content {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Ensures that the footer sticks to the bottom */
+.footer {
+  margin-top: auto;
+}
+
+/* Optional: Styling for navbar and other elements */
+.navbar {
+  margin-bottom: 0;
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+}
+

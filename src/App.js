@@ -1,4 +1,3 @@
-
 import './App.css';
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -10,27 +9,29 @@ import CartPage from './layouts/Component/CartPage/CartPage';
 import { CartProvider } from './context/CartContext';
 import RegisterPage from './layouts/Component/RegisterPage/RegisterPage';
 import LoginPage from './layouts/Component/LoginPage/LoginPage';
-
-
+import ProductReviewPage from './layouts/Component/ProductReviewPage/ProductReviewPage';
 
 const App = () => {
   return (
     <CartProvider>
       <Router>
-        <div>
+        <div className="main-content"> {/* Wrap content with main-content class */}
           <Navbar />
-          <Routes>
-            <Route path='/' element={<HomePage />} />
-            <Route path="/products" element={<ProductListPage />} />
-            <Route path="/cart" element={<CartPage />} />
-            <Route path="/user/register" element={<RegisterPage />} />
-            <Route path="/user/login" element={<LoginPage />} />
-            {/* Add more routes here if needed */}
-          </Routes>
+          <div className="content">
+            <Routes>
+              <Route path='/' element={<HomePage />} />
+              <Route path="/products" element={<ProductListPage />} />
+              <Route path="/cart" element={<CartPage />} />
+              <Route path="/user/register" element={<RegisterPage />} />
+              <Route path="/user/login" element={<LoginPage />} />
+              <Route path="/products/details/:productId" element={<ProductReviewPage />} />
+            </Routes>
+          </div>
           <Footer />
         </div>
       </Router>
     </CartProvider>
   );
 };
+
 export default App;
