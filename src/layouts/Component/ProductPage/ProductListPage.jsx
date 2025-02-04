@@ -9,11 +9,12 @@ const ProductListPage = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const [category, setCategory] = useState("");
   const [cart, setCart] = useState([]);
   const [isCartVisible, setIsCartVisible] = useState(false);
 
-  const itemsPerPage = 12;
+  const itemsPerPage = 8; // Adjusted to display 8 products per page
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -28,23 +29,26 @@ const ProductListPage = () => {
       try {
         setLoading(true);
         const params = new URLSearchParams({ page: currentPage - 1, size: itemsPerPage });
-        if (category) params.append("category", category);
-
+        if (category) params.append("category", category); // Add category to request
+  
         const response = await fetch(`http://localhost:8080/api/products?${params.toString()}`);
         if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-
+  
         const result = await response.json();
-        setProducts(result || []);
+        setProducts(result.content || []);
+        setTotalPages(result.totalPages || 1);
       } catch (error) {
         console.error("Error fetching data:", error);
         setProducts([]);
+        setTotalPages(1);
       } finally {
         setLoading(false);
       }
     };
-
+  
     fetchProducts();
-  }, [currentPage, category]);
+  }, [currentPage, category]); 
+  
 
   const handleCategoryChange = (value) => {
     setCategory(value);
@@ -71,7 +75,6 @@ const ProductListPage = () => {
   const calculateTotalPrice = () =>
     cart.reduce((total, item) => total + item.price * item.quantity, 0);
 
-  // Navigate to product details
   const handleProductClick = (productId) => {
     navigate(`/products/details/${productId}`);
   };
@@ -121,7 +124,7 @@ const ProductListPage = () => {
       </div>
       <Filter category={category} onCategoryChange={handleCategoryChange} />
       <ProductList products={products} onAddToCart={addToCart} onProductClick={handleProductClick} />
-      <Pagination currentPage={currentPage} totalPages={Math.ceil(products.length / itemsPerPage)} onPageChange={setCurrentPage} />
+      <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
     </div>
   );
 };
