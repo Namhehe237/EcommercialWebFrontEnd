@@ -32,7 +32,7 @@ const CartPage = () => {
       if (response.ok) {
         const responseData = await response.text();
         console.log("Response from backend:", responseData);
-        navigate("/", { state: { responseData } });
+        navigate("/products/success", { state: { responseData } });
       } else {
         console.error("Failed to process checkout:", response.statusText);
       }

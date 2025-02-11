@@ -28,10 +28,15 @@ const ProductListPage = () => {
     const fetchProducts = async () => {
       try {
         setLoading(true);
-        const params = new URLSearchParams({ page: currentPage - 1, size: itemsPerPage });
-        if (category) params.append("category", category); // Add category to request
+        const params = new URLSearchParams({ 
+          page: currentPage - 1, 
+          size: itemsPerPage 
+        });
+        
+        if (category) params.append("category", category);
   
         const response = await fetch(`http://localhost:8080/api/products?${params.toString()}`);
+        
         if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
   
         const result = await response.json();
@@ -47,7 +52,7 @@ const ProductListPage = () => {
     };
   
     fetchProducts();
-  }, [currentPage, category]); 
+  }, [currentPage, category]);
   
 
   const handleCategoryChange = (value) => {

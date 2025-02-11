@@ -10,6 +10,7 @@ import { CartProvider } from './context/CartContext';
 import RegisterPage from './layouts/Component/RegisterPage/RegisterPage';
 import LoginPage from './layouts/Component/LoginPage/LoginPage';
 import ProductReviewPage from './layouts/Component/ProductReviewPage/ProductReviewPage';
+import CheckoutSuccessPage from './layouts/Component/CheckOutSuccessPage/CheckOutSuccessPage';
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
               <Route path="/user/register" element={<RegisterPage />} />
               <Route path="/user/login" element={<LoginPage />} />
               <Route path="/products/details/:productId" element={<ProductReviewPage />} />
+              <Route path="/products/success" element={<CheckoutSuccessPage />} />
             </Routes>
           </div>
           <Footer />

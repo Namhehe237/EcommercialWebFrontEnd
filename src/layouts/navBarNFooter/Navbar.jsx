@@ -11,7 +11,7 @@ const Navbar = () => {
       // Logout logic
       setIsLoggedIn(false); // Update state to logged out
       navigate("/user/login"); // Redirect to the homepage
-    } 
+    }
   };
 
   return (
@@ -39,14 +39,14 @@ const Navbar = () => {
               </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#about">
+              <a className="nav-link" href="/">
                 About
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#contact">
-                Contact
-              </a>
+              <Link className="nav-link" to="https://www.facebook.com/vuong.minion.3">
+                Contact Us
+              </Link>
             </li>
             <li className="nav-item">
               <button
