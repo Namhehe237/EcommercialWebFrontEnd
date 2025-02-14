@@ -11,6 +11,7 @@ import RegisterPage from './layouts/Component/RegisterPage/RegisterPage';
 import LoginPage from './layouts/Component/LoginPage/LoginPage';
 import ProductReviewPage from './layouts/Component/ProductReviewPage/ProductReviewPage';
 import CheckoutSuccessPage from './layouts/Component/CheckOutSuccessPage/CheckOutSuccessPage';
+import ForgetPasswordPage from './layouts/Component/ForgetPasswordPage/ForgetPasswordPage';
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
               <Route path="/cart" element={<CartPage />} />
               <Route path="/user/register" element={<RegisterPage />} />
               <Route path="/user/login" element={<LoginPage />} />
+              <Route path="/user/forgot-password" element={<ForgetPasswordPage />} />
               <Route path="/products/details/:productId" element={<ProductReviewPage />} />
               <Route path="/products/success" element={<CheckoutSuccessPage />} />
             </Routes>

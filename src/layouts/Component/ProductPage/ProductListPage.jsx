@@ -28,20 +28,28 @@ const ProductListPage = () => {
     const fetchProducts = async () => {
       try {
         setLoading(true);
-        const params = new URLSearchParams({ 
-          page: currentPage - 1, 
-          size: itemsPerPage 
-        });
-        
-        if (category) params.append("category", category);
-  
-        const response = await fetch(`http://localhost:8080/api/products?${params.toString()}`);
-        
-        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-  
-        const result = await response.json();
-        setProducts(result.content || []);
-        setTotalPages(result.totalPages || 1);
+        let response;
+        let result;
+
+        if (category) {
+          // Fetch products by category
+          response = await fetch(`http://localhost:8080/api/products/${category}`);
+          if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+          result = await response.json();
+          setProducts(result || []); // Non-paginated result
+          setTotalPages(1); // No pagination for category-specific endpoint
+        } else {
+          // Fetch paginated products
+          const params = new URLSearchParams({
+            page: currentPage - 1,
+            size: itemsPerPage,
+          });
+          response = await fetch(`http://localhost:8080/api/products?${params.toString()}`);
+          if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+          result = await response.json();
+          setProducts(result.content || []); // Use paginated content
+          setTotalPages(result.totalPages || 1); // Set total pages from response
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
         setProducts([]);
@@ -50,10 +58,9 @@ const ProductListPage = () => {
         setLoading(false);
       }
     };
-  
+
     fetchProducts();
   }, [currentPage, category]);
-  
 
   const handleCategoryChange = (value) => {
     setCategory(value);
@@ -64,7 +71,9 @@ const ProductListPage = () => {
     setCart((prevCart) => {
       const existingProduct = prevCart.find((item) => item.id === product.id);
       return existingProduct
-        ? prevCart.map((item) => (item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item))
+        ? prevCart.map((item) =>
+            item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+          )
         : [...prevCart, { ...product, quantity: 1 }];
     });
   };
@@ -72,7 +81,9 @@ const ProductListPage = () => {
   const removeFromCart = (productId) => {
     setCart((prevCart) =>
       prevCart
-        .map((item) => (item.id === productId ? { ...item, quantity: item.quantity - 1 } : item))
+        .map((item) =>
+          item.id === productId ? { ...item, quantity: item.quantity - 1 } : item
+        )
         .filter((item) => item.quantity > 0)
     );
   };
@@ -128,8 +139,18 @@ const ProductListPage = () => {
         </div>
       </div>
       <Filter category={category} onCategoryChange={handleCategoryChange} />
-      <ProductList products={products} onAddToCart={addToCart} onProductClick={handleProductClick} />
-      <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
+      <ProductList
+        products={products}
+        onAddToCart={addToCart}
+        onProductClick={handleProductClick}
+      />
+      {!category && (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={setCurrentPage}
+        />
+      )}
     </div>
   );
 };
