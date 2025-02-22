@@ -22,21 +22,21 @@ const ForgetPasswordPage = () => {
     e.preventDefault();
     setErrorMessage("");
     setSuccessMessage("");
-
+  
     if (!validateEmail(email)) {
       setErrorMessage("Please enter a valid email address.");
       return;
     }
-
+  
     try {
-      const response = await fetch("http://localhost:8080/api/user/forget-password", {
+      const response = await fetch("http://localhost:8080/api/user/send-mail", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "text/plain", // Ensure raw text is sent
         },
-        body: JSON.stringify({ email }),
+        body: email, // Send the email as a plain string
       });
-
+  
       const data = await response.text();
       if (response.ok) {
         setSuccessMessage(data);
@@ -48,6 +48,7 @@ const ForgetPasswordPage = () => {
       setErrorMessage("An error occurred. Please try again later.");
     }
   };
+  
 
   return (
     <div className="register-container">
