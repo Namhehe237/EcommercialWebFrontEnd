@@ -1,65 +1,85 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Menu,
+  MenuItem,
+  Typography,
+  Avatar,
+  Button,
+  Box,
+  Divider,
+} from "@mui/material";
 
 const Navbar = () => {
   const { isLoggedIn, setIsLoggedIn } = useAuth();
   const navigate = useNavigate();
+  const [anchorEl, setAnchorEl] = useState(null);
 
-  const handleButtonClick = () => {
-    if (isLoggedIn || !isLoggedIn) {
-      // Logout logic
-      setIsLoggedIn(false); // Update state to logged out
-      navigate("/user/login"); // Redirect to the homepage
-    }
+  const handleMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    navigate("/user/login");
+    handleMenuClose();
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark py-3">
-      <div className="container-fluid">
-        <a className="navbar-brand" href="/">
+    <AppBar position="static">
+      <Toolbar>
+        {/* Website Name */}
+        <Typography variant="h6" sx={{ flexGrow: 1 }}>
           E-Commercial Website
-        </a>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav ms-auto">
-            <li className="nav-item">
-              <Link className="nav-link" to="/products">
-                Products
-              </Link>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="/">
-                About
-              </a>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="https://www.facebook.com/vuong.minion.3">
-                Contact Us
-              </Link>
-            </li>
-            <li className="nav-item">
-              <button
-                className="btn btn-outline-light ms-3"
-                onClick={handleButtonClick}
-              >
-                {isLoggedIn ? "Logout" : "Login"}
-              </button>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+        </Typography>
+
+        {/* Navigation Links */}
+        <Box sx={{ display: { xs: "none", md: "flex" } }}>
+          <Button color="inherit" component={Link} to="/products">
+            Products
+          </Button>
+          <Button color="inherit" component={Link} to="/">
+            About
+          </Button>
+          <Button color="inherit" component={Link} to="https://www.facebook.com/vuong.minion.3">
+            Contact Us
+          </Button>
+        </Box>
+
+        {/* Avatar/Menu when Logged In */}
+        {isLoggedIn ? (
+          <>
+            <IconButton onClick={handleMenuOpen} sx={{ ml: 2 }}>
+              <Avatar alt="User" src="/images/user-avatar.png" />
+            </IconButton>
+            <Menu
+              anchorEl={anchorEl}
+              open={Boolean(anchorEl)}
+              onClose={handleMenuClose}
+            >
+              <MenuItem disabled>Welcome</MenuItem>
+              <Divider />
+              <MenuItem onClick={() => navigate("/user/setting")}>
+                Settings
+              </MenuItem>
+              <MenuItem onClick={handleLogout}>Logout</MenuItem>
+            </Menu>
+          </>
+        ) : (
+          <Button color="inherit" onClick={() => navigate("/user/login")}>
+            Login
+          </Button>
+        )}
+      </Toolbar>
+    </AppBar>
   );
 };
 
