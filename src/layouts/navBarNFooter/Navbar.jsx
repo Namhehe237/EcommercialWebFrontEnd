@@ -67,7 +67,7 @@ const Navbar = () => {
             >
               <MenuItem disabled>Welcome</MenuItem>
               <Divider />
-              <MenuItem onClick={() => navigate("/user/setting")}>
+              <MenuItem onClick={() => navigate("/user/change-password")}>
                 Settings
               </MenuItem>
               <MenuItem onClick={handleLogout}>Logout</MenuItem>
