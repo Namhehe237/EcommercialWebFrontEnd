@@ -18,7 +18,7 @@ const ProductDetailsPage = () => {
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/api/products/${productId}`);
+        const response = await fetch(`http://localhost:8080/api/products/details/${productId}`);
         if (!response.ok) throw new Error("Failed to fetch product details");
 
         const productData = await response.json();

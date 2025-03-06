@@ -48,7 +48,9 @@ const CheckoutSuccessPage = () => {
         {responseData && (
           <Box sx={{ marginTop: 3 }}>
             <Typography variant="h6" color="primary">
-              {responseData}
+              {responseData.split("\n").map((line, index) => (
+                <div key={index}>{line}</div>
+              ))}
             </Typography>
             <Typography variant="body2" color="textSecondary">
               Your order is being processed, and you will receive an email with the details soon.
