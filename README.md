@@ -59,11 +59,5 @@ To learn more about React and Create React App:
 - [Create React App Documentation](https://facebook.github.io/create-react-app/docs/getting-started)
 - [React Documentation](https://reactjs.org/)
 
-## License
 
-This project is licensed under the [MIT License](LICENSE).
-
-
-
-Happy Coding! 🚀
 
